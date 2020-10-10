@@ -18,6 +18,10 @@ Route::get('/', function () {
 Route::group(['prefix' => 'barang'], function() {
 	Route::get('/', 'BarangController@index')->name('barang');
 	Route::get('/get', 'BarangController@get')->name('barang.get');
+	Route::get('/create', 'BarangController@create')->name('barang.create');
+	Route::post('/store', 'BarangController@store')->name('barang.store');
+	Route::get('/edit/{id?}', 'BarangController@edit')->name('barang.edit');
+	Route::post('/update/{id?}', 'BarangController@update')->name('barang.update');
 	Route::get('/delete/{id?}', 'BarangController@delete')->name('barang.delete');
 });
 
