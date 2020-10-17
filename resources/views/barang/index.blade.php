@@ -62,8 +62,8 @@
 							alert(response.message);
 						}
 					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						var response = JSON.parse(xhr.responseText)							
+					error: function(xhr, ajaxOptions, thrownError) {						
+						var response = xhr.responseJSON;
 						$('#frm-barang').prepend(validationMessage(response));
 					}
 				})	
@@ -97,8 +97,8 @@
 							alert(response.message);
 						}
 					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						var response = JSON.parse(xhr.responseText)							
+					error: function(xhr, ajaxOptions, thrownError) {						
+						var response = xhr.responseJSON;				
 						$('#frm-barang').prepend(validationMessage(response));
 					}
 				})	
@@ -119,14 +119,30 @@
 				})
 			}
 
-			function validationMessage(errors) {
+			function validationMessage(response) {
+				console.log(response);
 				var validationHtml = '<div class="alert alert-danger">';
-					validationHtml += '<p><b>'+errors.message+'</b></p>';				
-					$.each(errors.errors, function(i, error) {
+					validationHtml += '<p><b>'+response.message+'</b></p>';				
+					$.each(response.errors, function(i, error) {						
 						validationHtml += error[0]+'<br>'
 					})							
 				validationHtml += '</div>';	
 				return validationHtml;
+			}	
+
+			function addSatuan() {
+				var key = new Date().getTime();
+				var html = '<tr id="table-satuan-'+key+'">'+
+					'<td><input type="text" name="satuan['+key+'][satuan]" class="form-control form-control-sm"></td>'+
+					'<td><input type="text" name="satuan['+key+'][x]" class="form-control form-control-sm text-center"></td>'+
+					'<td><input type="text" name="satuan['+key+'][y]" class="form-control form-control-sm text-center"></td>'+
+					'<td><button type="button" class="btn btn-sm btn-danger" onclick="deleteSatuan('+key+')">Delete</button></td>'+
+				'</tr>';
+				$('#table-satuan tbody').append(html);
+			}
+
+			function deleteSatuan(key) {
+				$('#table-satuan #table-satuan-'+key).remove();
 			}
 		</script>
 	</body>
